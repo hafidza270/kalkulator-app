@@ -29,7 +29,7 @@ class _KalkulatorHomeState extends State<KalkulatorHome> {
   bool isOperandActive = false;
 
   buttonPressed(String buttonText) {
-    if (buttonText == "CLEAR") {
+    if (buttonText == "C") {
       _output = "0";
       num1 = 0.0;
       num2 = 0.0;
@@ -82,17 +82,30 @@ class _KalkulatorHomeState extends State<KalkulatorHome> {
     });
   }
 
-  Widget buildButton(String buttonText) {
-    return Expanded(
-      child: OutlinedButton(
-        child: Text(
-          buttonText,
-          style: TextStyle(
-            fontSize: 20.0,
-            fontWeight: FontWeight.bold,
+  Widget buildButton(String buttonText, bool isButtonAction) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: SizedBox(
+        width: 80.0,
+        height: 80.0,
+        child: OutlinedButton(
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all<Color>(
+                isButtonAction ? Colors.orange : Colors.grey),
+            shape: MaterialStateProperty.all<CircleBorder>(
+              CircleBorder(),
+            ),
           ),
+          child: Text(
+            buttonText,
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 24.0,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          onPressed: () => buttonPressed(buttonText),
         ),
-        onPressed: () => buttonPressed(buttonText),
       ),
     );
   }
@@ -101,9 +114,14 @@ class _KalkulatorHomeState extends State<KalkulatorHome> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Kalkulator Sederhana"),
+        backgroundColor: const Color(0xFF32012F),
+        title: const Text(
+          "Kalkulator Sederhana",
+          style: TextStyle(color: Colors.white),
+        ),
       ),
       body: Container(
+        color: const Color(0xFF32012F),
         child: Column(
           children: <Widget>[
             Container(
@@ -115,6 +133,7 @@ class _KalkulatorHomeState extends State<KalkulatorHome> {
               child: Text(
                 output,
                 style: TextStyle(
+                  color: Colors.white,
                   fontSize: 48.0,
                   fontWeight: FontWeight.bold,
                 ),
@@ -126,41 +145,46 @@ class _KalkulatorHomeState extends State<KalkulatorHome> {
             Column(
               children: <Widget>[
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
-                    buildButton("7"),
-                    buildButton("8"),
-                    buildButton("9"),
-                    buildButton("/"),
+                    buildButton("7", false),
+                    buildButton("8", false),
+                    buildButton("9", false),
+                    buildButton("/", true),
                   ],
                 ),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
-                    buildButton("4"),
-                    buildButton("5"),
-                    buildButton("6"),
-                    buildButton("x"),
+                    buildButton("4", false),
+                    buildButton("5", false),
+                    buildButton("6", false),
+                    buildButton("x", true),
                   ],
                 ),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
-                    buildButton("1"),
-                    buildButton("2"),
-                    buildButton("3"),
-                    buildButton("-"),
+                    buildButton("1", false),
+                    buildButton("2", false),
+                    buildButton("3", false),
+                    buildButton("-", true),
                   ],
                 ),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
-                    buildButton("."),
-                    buildButton("0"),
-                    buildButton("00"),
-                    buildButton("+"),
+                    buildButton(".", false),
+                    buildButton("0", false),
+                    buildButton("00", false),
+                    buildButton("+", true),
                   ],
                 ),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
-                    buildButton("CLEAR"),
-                    buildButton("="),
+                    buildButton("C", true),
+                    buildButton("=", true),
                   ],
                 ),
               ],
